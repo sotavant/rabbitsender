@@ -16,9 +16,9 @@ func main() {
 	defer ch.Close();
 
 	q, err := ch.QueueDeclare(
-		"hello",
-		false,
-		false,
+		"gendoc2",
+		true, // durable
+ 		false,
 		false,
 		false,
 		nil,
@@ -26,14 +26,15 @@ func main() {
 
 	failOnError(err, "Failed to declare a queue")
 
-	body := "hello"
+	body := "[\"body\"]"
 	err = ch.Publish(
 		"",
 		q.Name,
 		false,
 		false,
 		amqp.Publishing {
-			ContentType: "test/plain",
+			DeliveryMode: amqp.Persistent,
+			ContentType: "application/json",
 			Body: []byte(body),
 		})
 
