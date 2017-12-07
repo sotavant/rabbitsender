@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"github.com/streadway/amqp"
+	"strconv"
 )
 
 func main() {
@@ -26,19 +27,22 @@ func main() {
 
 	failOnError(err, "Failed to declare a queue")
 
-	body := "[\"body\"]"
-	err = ch.Publish(
-		"",
-		q.Name,
-		false,
-		false,
-		amqp.Publishing {
-			DeliveryMode: amqp.Persistent,
-			ContentType: "application/json",
-			Body: []byte(body),
-		})
+	for i := 0; i < 55; i++ {
+		body := "[\"body\", \"" + strconv.Itoa(i) + "\"]"
+		err = ch.Publish(
+			"",
+			q.Name,
+			false,
+			false,
+			amqp.Publishing {
+				DeliveryMode: amqp.Persistent,
+				ContentType: "application/json",
+				Body: []byte(body),
+			})
 
-	log.Printf(" [x] Sent %s", body)
+		log.Printf(" [x] Sent %s", body)
+	}
+
 	failOnError(err, "Failed to publish a message")
 
 }
