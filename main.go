@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"log"
 	"github.com/streadway/amqp"
-	"strconv"
 )
 
 func main() {
-	conn, err := amqp.Dial("amqp://fans:123456@localhost:5672/")
+	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
 
@@ -27,8 +26,22 @@ func main() {
 
 	failOnError(err, "Failed to declare a queue")
 
-	for i := 0; i < 55; i++ {
-		body := "[\"body\", \"" + strconv.Itoa(i) + "\"]"
+	test := [11]string{
+		`{"taskId":3,"type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e1.pdf"}`,
+		`{"taskId":3,"type":"pdf","lastDoc":true,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e2.pdf"}`,
+		`{"taskId":3,"type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e3.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e1.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e2.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e3.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e4.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e6.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e8.pdf"}`,
+		`{"taskId":4,"type":"pdf","lastDoc":true,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e9.pdf"}`,
+	}
+
+	for _, v := range test {
+		body := v
 		err = ch.Publish(
 			"",
 			q.Name,
