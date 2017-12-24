@@ -16,7 +16,7 @@ func main() {
 	defer ch.Close();
 
 	q, err := ch.QueueDeclare(
-		"gendoc2",
+		"types",
 		true, // durable
  		false,
 		false,
@@ -27,25 +27,22 @@ func main() {
 	failOnError(err, "Failed to declare a queue")
 
 	test := [16]string{
-		`{"taskId":1,"type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e1.pdf"}`,
-		`{"taskId":1,"type":"pdf","lastDoc":true,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e2.pdf"}`,
-		`{"taskId":1,"type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e3.pdf"}`,
-
-		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e1.pdf"}`,
-		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e2.pdf"}`,
-		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e3.pdf"}`,
-		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e4.pdf"}`,
-		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
-		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e6.pdf"}`,
-		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e8.pdf"}`,
-		`{"taskId":2,"type":"pdf","lastDoc":true,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e9.pdf"}`,
-
-		`{"taskId":5,"type":"pdf","lastDoc":false,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
-		`{"taskId":5,"type":"pdf","lastDoc":false,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e6.pdf"}`,
-		`{"taskId":5,"type":"pdf","lastDoc":false,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e8.pdf"}`,
-		`{"taskId":5,"type":"pdf","lastDoc":true,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e9.pdf"}`,
-
-		`{"taskId":6,"type":"pdf","lastDoc":true,"docCount":1,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
+		`{"type":"pdf","data":{"field1": "value1", "field2": "value17"}}`,
+		`{"type":"doc","data":{"field1": "value2", "field2": "value18"'}}`,
+		`{"type":"pdf","data":{"field1": "value3", "field2": "value19"}}`,
+		`{"type":"pdf","data":{"field1": "value4", "field2": "value20"'}}`,
+		`{"type":"pdf","data":{"field1": "value5", "field2": "value21"}}`,
+		`{"type":"doc","data":{"field1": "value6", "field2": "value22"}}`,
+		`{"type":"pdf","data":{"field1": "value7", "field2": "value23"}}`,
+		`{"type":"doc","data":{"field1": "value8", "field2": "value24"}}`,
+		`{"type":"pdf","data":{"field1": "value9", "field2": "value25"}}`,
+		`{"type":"txt","data":{"field1": "value10", "field2": "value26"}}`,
+		`{"type":"pdf","data":{"field1": "value11", "field2": "value27"}}`,
+		`{"type":"txt","data":{"field1": "value12", "field2": "value28"'}}`,
+		`{"type":"pdf","data":{"field1": "value13", "field2": "value29"}}`,
+		`{"type":"txt","data":{"field1": "value14", "field2": "value30"'}}`,
+		`{"type":"pdf","data":{"field1": "value15", "field2": "value31"}}`,
+		`{"type":"pdf","data":{"field1": "value16", "field2": "value32"}}`,
 	}
 
 	for _, v := range test {
