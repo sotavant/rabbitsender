@@ -27,9 +27,9 @@ func main() {
 	failOnError(err, "Failed to declare a queue")
 
 	test := [16]string{
-		`{"taskId":1,"type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e1.pdf"}`,
-		`{"taskId":1,"type":"pdf","lastDoc":true,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e2.pdf"}`,
-		`{"taskId":1,"type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e3.pdf"}`,
+		`{"taskId":1, "companyArchivePath": "/26/226", "type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e1.pdf"}`,
+		`{"taskId":1, "companyArchivePath": "/26/226", "type":"pdf","lastDoc":true,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e2.pdf"}`,
+		`{"taskId":1, "companyArchivePath": "/26/226", "type":"pdf","lastDoc":false,"docCount":3,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e3.pdf"}`,
 
 		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e1.pdf"}`,
 		`{"taskId":2,"type":"pdf","lastDoc":false,"docCount":8,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e2.pdf"}`,
@@ -45,7 +45,7 @@ func main() {
 		`{"taskId":5,"type":"pdf","lastDoc":false,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e8.pdf"}`,
 		`{"taskId":5,"type":"pdf","lastDoc":true,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e9.pdf"}`,
 
-		`{"taskId":6,"type":"pdf","lastDoc":true,"docCount":1,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
+		`{"taskId":6, "companyArchivePath": "/16/126", "type":"pdf","lastDoc":true,"docCount":1,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
 	}
 
 	for _, v := range test {
