@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"github.com/streadway/amqp"
+	"log"
 )
 
 func main() {
@@ -13,7 +12,7 @@ func main() {
 
 	ch, err := conn.Channel()
 	failOnError(err, "Failed to open a channel")
-	defer ch.Close();
+	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
 		"hello",
@@ -32,9 +31,9 @@ func main() {
 		q.Name,
 		false,
 		false,
-		amqp.Publishing {
+		amqp.Publishing{
 			ContentType: "test/plain",
-			Body: []byte(body),
+			Body:        []byte(body),
 		})
 
 	log.Printf(" [x] Sent %s", body)

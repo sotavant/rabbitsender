@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"github.com/streadway/amqp"
+	"log"
 )
 
 func main() {
@@ -13,12 +13,12 @@ func main() {
 
 	ch, err := conn.Channel()
 	failOnError(err, "Failed to open a channel")
-	defer ch.Close();
+	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"gendoc2",
+		"gendoc",
 		true, // durable
- 		false,
+		false,
 		false,
 		false,
 		nil,
@@ -45,7 +45,7 @@ func main() {
 		`{"taskId":5,"type":"pdf","lastDoc":false,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e8.pdf"}`,
 		`{"taskId":5,"type":"pdf","lastDoc":true,"docCount":4,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e9.pdf"}`,
 
-		`{"taskId":6, "companyArchivePath": "/16/126", "type":"pdf","lastDoc":true,"docCount":1,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
+		`{"taskId":9, "companyArchivePath": "/16/126", "type":"pdf","lastDoc":true,"docCount":1,"fileName":"\u0421\u0435\u043c\u0435\u043d\u043e\u0432 \u041e. \u041d.\u041f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439\u041c\u043e5.pdf"}`,
 	}
 
 	for _, v := range test {
@@ -55,10 +55,10 @@ func main() {
 			q.Name,
 			false,
 			false,
-			amqp.Publishing {
+			amqp.Publishing{
 				DeliveryMode: amqp.Persistent,
-				ContentType: "application/json",
-				Body: []byte(body),
+				ContentType:  "application/json",
+				Body:         []byte(body),
 			})
 
 		log.Printf(" [x] Sent %s", body)
